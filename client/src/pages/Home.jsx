@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { apiUrl } from '../api'
 
 export default function Home() {
   const [config, setConfig]   = useState(null)
@@ -10,8 +11,8 @@ export default function Home() {
     async function load() {
       try {
         const [cfgRes, issuesRes] = await Promise.all([
-          fetch('/api/config'),
-          fetch('/api/issues')
+          fetch(apiUrl('/api/config')),
+          fetch(apiUrl('/api/issues'))
         ])
         if (cfgRes.ok) setConfig(await cfgRes.json())
         if (issuesRes.ok) setIssues(await issuesRes.json())

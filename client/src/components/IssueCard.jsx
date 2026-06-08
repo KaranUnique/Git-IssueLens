@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import WorthinessBadge from './WorthinessBadge'
 import ConfidenceBar from './ConfidenceBar'
+import { apiUrl } from '../api'
 
 const PRIORITY_COLORS = {
   High:   'text-red-400 bg-red-900/20 border-red-800',
@@ -45,7 +46,7 @@ export default function IssueCard({ issue: initialIssue }) {
     setLoading(decision)
     setError(null)
     try {
-      const res  = await fetch(`/api/issues/${issue._id}/decision`, {
+      const res  = await fetch(apiUrl(`/api/issues/${issue._id}/decision`), {
         method: 'PATCH', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ decision })
       })
@@ -60,7 +61,7 @@ export default function IssueCard({ issue: initialIssue }) {
     setLoading('analyzing')
     setError(null)
     try {
-      const res  = await fetch(`/api/issues/${issue._id}/analyze`, { method: 'POST' })
+      const res  = await fetch(apiUrl(`/api/issues/${issue._id}/analyze`), { method: 'POST' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Analysis failed')
       setIssue(data)

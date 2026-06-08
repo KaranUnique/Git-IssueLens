@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import IssueCard from '../components/IssueCard'
+import { apiUrl } from '../api'
 
 export default function Dashboard() {
   const [issues, setIssues]   = useState([])
@@ -9,7 +10,7 @@ export default function Dashboard() {
 
   function loadIssues() {
     setLoading(true)
-    fetch('/api/issues')
+    fetch(apiUrl('/api/issues'))
       .then(r => r.json())
       .then(data => { if (Array.isArray(data)) setIssues(data) })
       .finally(() => setLoading(false))
@@ -20,7 +21,7 @@ export default function Dashboard() {
   async function handleReset() {
     setResetting(true)
     try {
-      await fetch('/api/issues/reset-status', { method: 'POST' })
+      await fetch(apiUrl('/api/issues/reset-status'), { method: 'POST' })
       loadIssues()
     } finally {
       setResetting(false)

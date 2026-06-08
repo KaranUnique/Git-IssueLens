@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { apiUrl } from '../api'
 
 export default function SubmitIssueForm({ onResult }) {
   const [form, setForm]     = useState({ title: '', description: '' })
@@ -20,7 +21,7 @@ export default function SubmitIssueForm({ onResult }) {
     setLoading(true)
 
     try {
-      const res = await fetch('/api/issues', {
+      const res = await fetch(apiUrl('/api/issues'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
