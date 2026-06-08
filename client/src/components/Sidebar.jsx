@@ -11,8 +11,8 @@ export default function Sidebar() {
     <aside className="w-52 shrink-0 bg-[#13131a] border-r border-[#22222e] flex flex-col min-h-screen">
       {/* Logo */}
       <div className="px-5 py-5 flex items-center gap-2.5 border-b border-[#22222e]">
-        <img src="/Logo.png" alt="Logo" className="w-11 h-11 rounded-lg object-contain" />
-        <span className="text-white font-semibold text-sm">Git IssueLens</span>
+        <img src="/Logo.png" alt="Logo" className="w-9 h-9 rounded-lg object-contain" />
+        <span className="text-white font-semibold text-lg">Git IssueLens</span>
       </div>
 
       {/* Nav */}
