@@ -34,6 +34,9 @@ async function fetchReadmeContent(repoOwner, repoName, pat) {
   } catch { return '' }
 }
 
+// GET /api/health — fast ping, no DB
+router.get('/health', (req, res) => res.json({ ok: true }))
+
 // GET /api/config
 router.get('/', async (req, res) => {
   const { sessionId } = req
