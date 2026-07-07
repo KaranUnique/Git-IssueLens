@@ -12,6 +12,12 @@ const app = express()
 
 app.use(cors())
 
+// Attach sessionId from header to every request
+app.use((req, res, next) => {
+  req.sessionId = req.headers['x-session-id'] || null
+  next()
+})
+
 // Use the verify callback on express.json() to capture the raw body bytes
 // needed for webhook HMAC-SHA256 signature verification (Requirement 2.2).
 app.use(express.json({

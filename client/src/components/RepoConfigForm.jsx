@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { apiUrl } from '../api'
+import { apiFetch } from '../api'
 
 const FIELDS = [
   { key: 'repoUrl',       label: 'Repository URL',                placeholder: 'https://github.com/owner/repo', type: 'text'     },
@@ -27,7 +27,7 @@ export default function RepoConfigForm({ onSuccess }) {
     setErrors({})
     setSaving(true)
     try {
-      const res  = await fetch(apiUrl('/api/config'), {
+      const res  = await apiFetch('/api/config', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const projectSchema = new mongoose.Schema({
+  sessionId:    { type: String, required: true, index: true },
   name:         { type: String, required: true, trim: true },
   description:  { type: String, required: true, trim: true },
   scope:        { type: String, required: true, trim: true },

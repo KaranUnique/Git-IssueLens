@@ -8,6 +8,10 @@ body {
   font-family: 'Inter', system-ui, sans-serif;
 }
 
+main {
+  zoom: 1.15;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }

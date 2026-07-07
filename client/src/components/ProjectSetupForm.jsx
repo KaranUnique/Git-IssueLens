@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { apiUrl } from '../api'
+import { apiFetch } from '../api'
 
 const FIELDS = [
   { key: 'name',         label: 'Project Name',        placeholder: 'e.g. My Open Source Project' },
@@ -35,7 +35,7 @@ export default function ProjectSetupForm({ initialValues, onSaved }) {
     setSaving(true)
     setSuccess(false)
     try {
-      const res = await fetch(apiUrl('/api/project'), {
+      const res = await apiFetch('/api/project', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const repoConfigSchema = new mongoose.Schema({
+  sessionId:       { type: String, required: true, index: true },
   repoUrl:         { type: String, required: true, trim: true },
   repoOwner:       { type: String, required: true, trim: true },
   repoName:        { type: String, required: true, trim: true },

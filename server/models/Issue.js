@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const issueSchema = new mongoose.Schema({
+  sessionId:      { type: String, required: true, index: true },
   // From GitHub webhook payload
   githubIssueId:  { type: Number, required: true },
   githubIssueUrl: { type: String, required: true },
