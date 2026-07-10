@@ -137,6 +137,8 @@ async function analyzeIssue(repoConfig, issueData) {
   const RETRY_DELAY_MS = 2000
 
   const apiKey = process.env.GEMINI_API_KEY
+  const sdkVersion = require('@google/generative-ai/package.json').version
+  console.log(`[Gemini] SDK version: ${sdkVersion}`)
   console.log(`[Gemini] API key present: ${!!apiKey}, prefix: ${apiKey ? apiKey.slice(0, 8) + '...' : 'MISSING'}`)
 
   const genAI = new GoogleGenerativeAI(apiKey)
