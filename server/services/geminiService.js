@@ -132,7 +132,7 @@ function validateResponse(parsed) {
  * @returns {{ data: Object }|{ error: string }}
  */
 async function analyzeIssue(repoConfig, issueData) {
-  const MODEL_NAME = 'gemini-2.5-flash-lite-preview-06-17'
+  const MODEL_NAME = 'gemini-2.5-flash-lite'
   const MAX_RETRIES = 3
   const RETRY_DELAY_MS = 2000
 
