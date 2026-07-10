@@ -136,7 +136,10 @@ async function analyzeIssue(repoConfig, issueData) {
   const MAX_RETRIES = 3
   const RETRY_DELAY_MS = 2000
 
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+  const apiKey = process.env.GEMINI_API_KEY
+  console.log(`[Gemini] API key present: ${!!apiKey}, prefix: ${apiKey ? apiKey.slice(0, 8) + '...' : 'MISSING'}`)
+
+  const genAI = new GoogleGenerativeAI(apiKey)
   const model = genAI.getGenerativeModel({ model: MODEL_NAME })
 
   console.log(`[Gemini] Using model: ${MODEL_NAME}`)
@@ -164,7 +167,8 @@ async function analyzeIssue(repoConfig, issueData) {
                           msg.includes('rate limit') ||
                           msg.includes('overloaded')
 
-      console.error(`[Gemini] Attempt ${attempt} failed: ${msg}`)
+      console.error(`[Gemini] Attempt ${attempt} failed. Status: ${err.status || 'N/A'}, Message: ${msg}`)
+      console.error(`[Gemini] Full error:`, JSON.stringify(err, Object.getOwnPropertyNames(err)))
 
       if (!isRetryable || attempt === MAX_RETRIES) break
 

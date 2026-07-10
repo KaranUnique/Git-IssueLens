@@ -61,7 +61,13 @@ async function registerWebhook(repoOwner, repoName, pat, webhookUrl, secret) {
 
   if (!response.ok) {
     const body = await response.text()
-    throw new Error(`GitHub API error ${response.status}: ${body}`)
+    let message = `GitHub API error ${response.status}`
+    try {
+      const parsed = JSON.parse(body)
+      if (parsed.message) message = parsed.message
+      if (parsed.errors?.length) message += `: ${parsed.errors.map(e => e.message || e.code).join(', ')}`
+    } catch { /* body wasn't JSON */ }
+    throw new Error(message)
   }
 
   const data = await response.json()
@@ -92,7 +98,9 @@ async function deregisterWebhook(repoOwner, repoName, pat, webhookId) {
   // 404 means the hook is already gone — treat as success
   if (!response.ok && response.status !== 404) {
     const body = await response.text()
-    throw new Error(`GitHub API error ${response.status}: ${body}`)
+    let message = `GitHub API error ${response.status}`
+    try { const p = JSON.parse(body); if (p.message) message = p.message } catch {}
+    throw new Error(message)
   }
 }
 
@@ -119,7 +127,9 @@ async function fetchOpenIssues(repoOwner, repoName, pat) {
 
     if (!response.ok) {
       const body = await response.text()
-      throw new Error(`GitHub API error ${response.status}: ${body}`)
+      let message = `GitHub API error ${response.status}`
+      try { const p = JSON.parse(body); if (p.message) message = p.message } catch {}
+      throw new Error(message)
     }
 
     const batch = await response.json()
