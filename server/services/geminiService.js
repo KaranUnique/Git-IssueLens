@@ -132,7 +132,7 @@ function validateResponse(parsed) {
  * @returns {{ data: Object }|{ error: string }}
  */
 async function analyzeIssue(repoConfig, issueData) {
-  const MODEL_NAME = 'gemini-2.0-flash'
+  const MODEL_NAME = 'gemini-1.5-flash'
   const MAX_RETRIES = 3
   const RETRY_DELAY_MS = 2000
 
@@ -172,8 +172,11 @@ async function analyzeIssue(repoConfig, issueData) {
 
       if (!isRetryable || attempt === MAX_RETRIES) break
 
-      console.log(`[Gemini] Retryable error — waiting ${RETRY_DELAY_MS}ms before retry…`)
-      await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS))
+      const retryDelayMatch = msg.match(/retry in (\d+(\.\d+)?)s/)
+      const waitMs = retryDelayMatch ? Math.min(Math.ceil(parseFloat(retryDelayMatch[1])) * 1000, 60000) : RETRY_DELAY_MS
+
+      console.log(`[Gemini] Retryable error — waiting ${waitMs}ms before retry…`)
+      await new Promise(resolve => setTimeout(resolve, waitMs))
     }
   }
 
